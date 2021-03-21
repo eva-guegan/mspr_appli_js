@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "Users",
+  name: "Promotions",
   data() {
     return {
       resultsApi : [],
