@@ -1,9 +1,22 @@
 <template>
   <div id="app">
+
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/liste_promotions">Promotions</router-link>
+<!--  variant : dark or light-->
+      <b-navbar toggleable="lg" type="dark" variant="light">
+        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item><router-link to="/">Home</router-link></b-nav-item>
+            <b-nav-item><router-link to="/liste_promotions">Promotions</router-link></b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
     </div>
+    <br />
+
     <router-view/>
   </div>
 </template>
@@ -17,21 +30,18 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
-
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: gray;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: black;
 }
 
 .center {
-  display: contents;
+  display: grid;
   place-items: center;
 }
+
 </style>

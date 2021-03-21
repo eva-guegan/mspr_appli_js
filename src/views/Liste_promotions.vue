@@ -3,10 +3,21 @@
     <h3>Liste des promotions en cours</h3>
     <br />
 
-    <div v-for="resultApi in resultsApi">
-      <p v-if="resultApi.dateexpire >= dateJour">Titre : {{ resultApi.titre }}, Reduc : {{ resultApi.reduc }}%, Date d'expiration : {{ resultApi.dateexpire }}</p>
-<!--      Si besoin d'un btn détail -->
-<!--      <b-button variant="primary"><router-link :to="'promotion/' + resultApi.idPromotion">Détail</router-link></b-button>-->
+    <div class="center">
+      <div v-for="resultApi in resultsApi" v-if="resultApi.dateexpire >= dateJour">
+        <b-card-group deck class="mb-3">
+          <b-card border-variant="dark" :header="resultApi.titre" align="center" style="width: 20em">
+            <b-card-text>
+              - {{ resultApi.reduc }}% de réduction !
+              <br />
+              A utiliser avant le : {{ resultApi.dateexpire }}
+<!--              Si besoin d'un btn détail -->
+<!--              <b-button variant="primary"><router-link class="lienBlanc" :to="'user/' + resultApi.idUser">Détail</router-link></b-button><span>azer</span>-->
+            </b-card-text>
+          </b-card>
+        </b-card-group>
+        <br />
+      </div>
     </div>
 
   </div>
