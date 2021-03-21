@@ -3,7 +3,7 @@
 
     <div id="nav">
 <!--  variant : dark or light-->
-      <b-navbar toggleable="lg" type="dark" variant="light">
+      <b-navbar toggleable="lg" type="light" variant="light">
         <b-navbar-brand href="#">NavBar</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -11,6 +11,7 @@
           <b-navbar-nav>
             <b-nav-item><router-link to="/">Home</router-link></b-nav-item>
             <b-nav-item><router-link to="/liste_promotions">Promotions</router-link></b-nav-item>
+            <b-nav-item><router-link to="/qrcode_reader">QRCodeReader</router-link></b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>

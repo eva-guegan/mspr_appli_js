@@ -14,6 +14,10 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios)
 
+//QRCodeReader
+import VueQrcodeReader from 'vue-qrcode-reader'
+Vue.use(VueQrcodeReader)
+
 Vue.config.productionTip = false
 
 new Vue({
