@@ -5,20 +5,15 @@
     <p class="error">{{ error }}</p>
 
     <div class="qrCode">
-<!--      :torch="torchActive"-->
       <qrcode-stream @decode="onDecode" @init="onInit" :camera="camera">
 
         <div class="loading-indicator" v-if="loading">
           <b-spinner variant="primary" label="Spinning"></b-spinner>
         </div>
 
-<!--        <button @click="torchActive = !torchActive" :disabled="torchNotSupported" class="btnFlash">-->
-<!--          <img :src="$withBase(icon)" alt="toggle torch">-->
-<!--        </button>-->
-
-<!--        <button @click="switchCamera" class="btnChangeCamera">-->
-<!--          <img :src="$withBase('/camera-switch.svg')" alt="switch camera">-->
-<!--        </button>-->
+        <button @click="switchCamera" class="btnChangeCamera">
+          <img src="../../public/switch_camera.png" alt="switch camera">
+        </button>
 
         <div v-if="validationPending" class="validation-pending">
           Traitement en cours ...
@@ -43,12 +38,11 @@
     data() {
       return {
         result: null,
+        saveBdd : false,
         error: "",
         loading: false,
         isValid: undefined,
-        camera: 'auto',
-        // torchActive: false,
-        // camera: 'rear',
+        camera: 'rear',
       }
     },
     methods: {
@@ -60,22 +54,30 @@
         // pretend it's taking really long
         await this.timeout(2000)
         // TODO : changer le startWith avec GOStyle
-        this.isValid = content.startsWith('A')
+        this.isValid = content.startsWith('T')
         // enregistrer en bdd
         if (this.isValid === true) {
+          this.saveBdd = true
           console.log('enregistrer en bdd')
-          // this.axios
-          //     .post(this.$root.baseApi + 'users/'+ this.idUser +'/user_coupon', {
+          // await this.axios
+          //     .post(this.$root.baseApi + '/user_coupons', {
           //       "id_user": "1",
           //       "id_coupon": "1",
           //       "isused": "0",
           //     })
+          // TODO : voir quand enregistre deux fois le même code pour le même user
+          // .then(res => {
+          //   this.saveBdd = res.data.bool;
+          //   if (this.saveBdd === false) {
+          //     this.isValid = false
+          //   }
+          // })
         }
 
         // some more delay, so users have time to read the message
         await this.timeout(3500)
         //redirection vers user_coupons
-        if (this.isValid === true) {
+        if (this.isValid === true && this.saveBdd === true) {
           console.log('redirection vers user_coupons')
           this.$router.push('/')
         }
@@ -91,6 +93,10 @@
           // successfully initialized
         } catch (error) {
           this.error = "Une erreur est survenu"
+
+          if (this.camera === 'rear') {
+            this.error = "Vous n'avez pas de caméra autre que frontale. Utilisez le bouton changement de caméra."
+          }
         } finally {
           this.loading = false
         }
@@ -109,16 +115,16 @@
           window.setTimeout(resolve, ms)
         })
       },
-      // switchCamera () {
-      //   switch (this.camera) {
-      //     case 'front':
-      //       this.camera = 'rear'
-      //       break
-      //     case 'rear':
-      //       this.camera = 'front'
-      //       break
-      //   }
-      // },
+      switchCamera () {
+        switch (this.camera) {
+          case 'front':
+            this.camera = 'rear'
+            break
+          case 'rear':
+            this.camera = 'front'
+            break
+        }
+      },
     },
     computed: {
       validationPending () {
@@ -128,15 +134,8 @@
       validationSuccess () {
         return this.isValid === true;
       },
-
       validationFailure () {
         return this.isValid === false
-      },
-      icon() {
-        if (this.torchActive)
-          return '/flash-off.svg'
-        else
-          return '/flash-on.svg'
       },
     },
   }
@@ -146,17 +145,13 @@
   .error {
     font-weight: bold;
     color: red;
+    width: 20em;
+    margin: 0 auto;
   }
 
   .qrCode {
     width: 20em;
     margin: 0 auto;
-  }
-
-  .btnFlash {
-    position: absolute;
-    left: 10px;
-    top: 10px;
   }
 
   .btnChangeCamera {
