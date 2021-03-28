@@ -3,8 +3,9 @@
     <h3>Liste des promotions en cours</h3>
     <br />
 
+<!--    Génération des cards-->
     <div class="center">
-      <div v-for="resultApi in resultsApi" v-if="resultApi.dateexpire >= dateJour">
+      <div v-for="resultApi in resultsApi" v-if="resultApi.dateexpire >= dateJour"> <!-- && resultApi.champDiff === 0-->
         <b-card-group deck class="mb-3">
           <b-card border-variant="dark" :header="resultApi.titre" align="center" style="width: 20em">
             <b-card-text>
@@ -38,6 +39,7 @@ export default {
   },
   methods: {
     appelApi() {
+      // Récupération des propomotions en cours sur le site
       this.axios
           .get(this.$root.baseApi + 'coupons/')
           .then(res => {

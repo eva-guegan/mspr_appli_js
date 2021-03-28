@@ -7,14 +7,17 @@
     <div class="qrCode">
       <qrcode-stream @decode="onDecode" @init="onInit" :camera="camera">
 
+<!--        Logo de chargement -->
         <div class="loading-indicator" v-if="loading">
           <b-spinner variant="primary" label="Spinning"></b-spinner>
         </div>
 
+<!--        bouton pour changer de caméra -->
         <button @click="switchCamera" class="btnChangeCamera">
           <img src="../../public/switch_camera.png" alt="switch camera">
         </button>
 
+<!--        Pour afficher les messages pendant le traitement -->
         <div v-if="validationPending" class="validation-pending">
           Traitement en cours ...
         </div>
@@ -26,6 +29,7 @@
         <div v-if="validationFailure" class="validation-failure">
           Il y a eu une erreur ! Le code est peut-être déjà scanner ou ce n'est pas un code GoStyle
         </div>
+<!--        Fin des messsages-->
       </qrcode-stream>
     </div>
 
@@ -49,13 +53,15 @@
       async onDecode (content) {
         this.result = content
         console.log(this.result)
+
         this.turnCameraOff()
 
-        // pretend it's taking really long
+        // Timeout pour éviter que le traitement se fasse tout de suite
         await this.timeout(2000)
+        // Vérification que c'est bien un qrCode de GoStyle
         // TODO : changer le startWith avec GOStyle
         this.isValid = content.startsWith('T')
-        // enregistrer en bdd
+        // enregistrement en bdd via l'api
         if (this.isValid === true) {
           this.saveBdd = true
           console.log('enregistrer en bdd')
@@ -74,9 +80,9 @@
           // })
         }
 
-        // some more delay, so users have time to read the message
+        // Timeout pour que les users est le temps de lire le message
         await this.timeout(3500)
-        //redirection vers user_coupons
+        //redirection vers la page des coupons de l'user
         if (this.isValid === true && this.saveBdd === true) {
           console.log('redirection vers user_coupons')
           this.$router.push('/')
@@ -90,7 +96,6 @@
         try {
           await promise
               .then(this.resetValidationState)
-          // successfully initialized
         } catch (error) {
           this.error = "Une erreur est survenu"
 

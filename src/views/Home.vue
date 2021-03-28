@@ -1,10 +1,11 @@
 <template>
   <div class="home">
     <h3>Vos coupons</h3>
-<!--    barre de recherche selon coupon utiliser ou pas avec un component -->
+<!--    TODO : barre de recherche selon coupon utiliser ou pas avec un component -->
     <SearchUserCoupon></SearchUserCoupon>
     <br />
 
+<!--    Génération des cards-->
     <div class="center">
       <div v-for="userCoupon in userCoupons">
         <b-card-group deck class="mb-3">
@@ -38,8 +39,8 @@ export default {
   },
   data() {
     return {
-      //récup selon la manière d'auth l'user
-      idUser: "1",
+      // TODO : récup selon la manière d'auth l'user
+      idUserCourant: "1",
       userCoupons: [],
     }
   },
@@ -48,8 +49,9 @@ export default {
   },
   methods: {
     appelApiUserCoupons() {
+      // Récupération des coupons de l'utilisateur connecter
       this.axios
-          .get(this.$root.baseApi + 'users/'+ this.idUser +'/user_coupon')
+          .get(this.$root.baseApi + 'users/'+ this.idUserCourant +'/user_coupon')
           .then(res => {
             this.userCoupons = res.data._embedded.user_coupons;
           })
