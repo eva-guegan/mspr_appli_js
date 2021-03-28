@@ -4,7 +4,7 @@
     <div id="nav">
 <!--  variant : dark or light-->
       <b-navbar toggleable="lg" type="light" variant="light">
-        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+        <b-navbar-brand href="#">GoStyle</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
