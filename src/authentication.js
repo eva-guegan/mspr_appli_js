@@ -1,4 +1,5 @@
 const userTab = [];
+let idUser = null;
 
 /**
  * @param {String} email
@@ -15,8 +16,11 @@ function api(email, password) {
             console.log(response);
             userTab["email"] = response.email;
             userTab["password"] = response.mdp;
-            console.log(userTab)
-            return userTab
+
+            let url = response._links.self.href
+            url = url.split("/")
+            idUser = url[url.length-1]
+            console.log(idUser)
         }
     };
     xhr.send();
@@ -30,15 +34,11 @@ function api(email, password) {
  */
 function login(email, password) {
 
-    let test = api(email, password)
-    if (test) {
-        console.log('test')
-    } else {
-        console.log('dans le else')
-    }
+    api(email, password)
 
     if (email === userTab["email"] && password === userTab["password"]) {
         let user = {
+            id: idUser,
             email,
             password
         }

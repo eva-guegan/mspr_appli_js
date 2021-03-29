@@ -26,6 +26,7 @@ new Vue({
   data() {
     return {
       baseApi: 'http://localhost:8083/',
+      idUser: '',
     }
   },
   render: h => h(AuthWrapper)

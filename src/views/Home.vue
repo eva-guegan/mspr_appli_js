@@ -39,8 +39,6 @@ export default {
   },
   data() {
     return {
-      // TODO : récup selon la manière d'auth l'user
-      idUserCourant: "1",
       userCoupons: [],
     }
   },
@@ -51,11 +49,11 @@ export default {
     appelApiUserCoupons() {
       // Récupération des coupons de l'utilisateur connecter
       this.axios
-          .get(this.$root.baseApi + 'users/'+ this.idUserCourant +'/user_coupon')
+          .get(this.$root.baseApi + 'users/'+ this.$root.idUser +'/user_couponSet')
           .then(res => {
             this.userCoupons = res.data._embedded.user_coupons;
           })
-    },
+    }
   },
 }
 </script>

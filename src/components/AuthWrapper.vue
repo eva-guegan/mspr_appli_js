@@ -20,8 +20,10 @@
     methods: {
       login({ email, password }) {
         this.user = login(email, password);
-        console.log("Après", this.user);
-        this.errorMessage = this.user ? "" : "Authentication failed, please try again";
+        console.log('this.user')
+        console.log(this.user)
+        this.$root.idUser = this.user.id
+        this.errorMessage = this.user ? "" : "Oups, la connexion n'est pas passé ! Veillez réessayer";
       }
     },
     components: { App, LoginForm }
