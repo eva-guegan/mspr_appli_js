@@ -13,14 +13,12 @@ function api(email, password) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             let response = JSON.parse(xhr.responseText);
-            console.log(response);
             userTab["email"] = response.email;
             userTab["password"] = response.mdp;
 
             let url = response._links.self.href
             url = url.split("/")
             idUser = url[url.length-1]
-            console.log(idUser)
         }
     };
     xhr.send();
