@@ -1,7 +1,8 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './components/App.vue'
 import './registerServiceWorker'
 import router from './router'
+import AuthWrapper from "./components/AuthWrapper";
 
 // BootstrapVue
 import { BootstrapVue } from 'bootstrap-vue'
@@ -27,5 +28,5 @@ new Vue({
       baseApi: 'http://localhost:8083/',
     }
   },
-  render: h => h(App)
+  render: h => h(AuthWrapper)
 }).$mount('#app')
