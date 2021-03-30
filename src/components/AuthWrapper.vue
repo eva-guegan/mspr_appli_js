@@ -20,7 +20,9 @@
     methods: {
       login({ email, password }) {
         this.user = login(email, password);
-        this.$root.idUser = this.user.id
+        if (this.user) {
+          this.$root.idUser = this.user.id
+        }
         this.errorMessage = this.user ? "" : "Oups, la connexion n'est pas passé ! Veillez réessayer";
       }
     },

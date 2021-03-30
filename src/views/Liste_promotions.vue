@@ -3,18 +3,15 @@
     <h3>Liste des promotions en cours</h3>
     <br />
 
-<!--    Quand isFree = 1 afficher-->
-<!--    Génération des cards-->
+<!--    Génération des cards -->
     <div class="center">
-      <div v-for="resultApi in resultsApi" v-if="resultApi.dateexpire >= dateJour"> <!-- && resultApi.champDiff === 0-->
+      <div v-for="resultApi in resultsApi" v-if="resultApi.dateexpire >= dateJour && resultApi.free === true">
         <b-card-group deck class="mb-3">
-          <b-card border-variant="dark" :header="resultApi.titre" align="center" style="width: 20em">
+          <b-card border-variant="dark" header-text-variant="white" header-bg-variant="dark" :header="resultApi.titre" align="center" style="width: 20em">
             <b-card-text>
               - {{ resultApi.reduc }}% de réduction !
               <br />
               A utiliser avant le : {{ resultApi.dateexpire }}
-<!--              Si besoin d'un btn détail -->
-<!--              <b-button variant="primary"><router-link class="lienBlanc" :to="'user/' + resultApi.idUser">Détail</router-link></b-button><span>azer</span>-->
             </b-card-text>
           </b-card>
         </b-card-group>

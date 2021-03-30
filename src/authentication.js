@@ -11,7 +11,17 @@ function api(email, password) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:8083/users/search/findByEmailAndMdp?email='+ email + '&mdp=' + password, false);
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
+        // if (xhr.readyState === 4) {
+        //     let response = JSON.parse(xhr.responseText);
+        //     userTab["email"] = response.email;
+        //     userTab["password"] = response.mdp;
+        //
+        //     let url = response._links.self.href
+        //     url = url.split("/")
+        //     idUser = url[url.length-1]
+        // }
+
+        if (xhr.status !== 404) {
             let response = JSON.parse(xhr.responseText);
             userTab["email"] = response.email;
             userTab["password"] = response.mdp;
@@ -40,7 +50,6 @@ function login(email, password) {
             email,
             password
         }
-
         return user
     } else {
         return null

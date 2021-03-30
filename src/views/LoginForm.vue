@@ -1,9 +1,12 @@
 <template>
   <div class="center">
 
-    <h3>Se connecter</h3>
+    <br />
+    <h3>Se connecter !</h3>
+    <br />
 
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    
     <b-form @submit.prevent="submit()">
       <b-form-group id="input-group-1" label="Email :" label-for="input-1">
         <b-form-input id="input-1" v-model="email" type="email" placeholder="Entrer votre email" required></b-form-input>

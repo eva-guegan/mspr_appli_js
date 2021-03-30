@@ -42,7 +42,7 @@
     data() {
       return {
         result: null,
-        saveBdd : false,
+        saveBdd : undefined,
         error: "",
         loading: false,
         isValid: undefined,
@@ -68,38 +68,21 @@
           let split = content.split("_")
           let idCoupon = split[split.length-1]
 
-          console.log(this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet')
-          console.log(this.$root.baseApi + 'coupons/' + idCoupon)
-
           // envoi de la requête api
-          // await this.axios.create({
+          // let data = this.$root.baseApi + 'coupons/' + idCoupon
+          // await this.axios.post(this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet', data, {
           //   headers: {
-          //     post: {
-          //       'Content-type': 'text/uri-list'
-          //     }
-          //   },
-          // }).request({
-          //   url: this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet',
-          //   method: "post",
-          //   data : this.$root.baseApi + 'coupons/' + idCoupon
+          //     "Content-Type": "text/uri-list",
+          //   }
+          // }).then(res => {
+          //   console.log(true)
+          //   this.saveBdd = true
+          // }).catch(err => {
+          //   console.log(false)
+          //   console.log(err)
+          //   this.saveBdd = false
           // })
-
-          let data = this.$root.baseApi + 'coupons/' + idCoupon
-          await this.axios.post(this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet', data, {
-            headers: {
-              "Content-Type": "text/uri-list",
-              'Access-Control-Allow-Origin': '*',
-              "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-              "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-            }
-          }).then(res => {
-            console.log(true)
-            this.saveBdd = true
-          }).catch(err => {
-            console.log(err)
-          })
-
-          // TODO : voir quand enregistre deux fois le même code pour le même user
+          this.saveBdd = true
         }
 
         // Timeout pour que les users est le temps de lire le message
@@ -130,6 +113,7 @@
       },
       resetValidationState () {
         this.isValid = undefined
+        this.saveBdd = undefined
       },
       turnCameraOn () {
         this.camera = 'auto'
@@ -156,13 +140,13 @@
     computed: {
       validationPending () {
         return this.isValid === undefined
-            && this.camera === 'off'
+            && this.camera === 'off' && this.saveBdd === undefined
       },
       validationSuccess () {
-        return this.isValid === true;
+        return this.isValid === true && this.saveBdd === true;
       },
       validationFailure () {
-        return this.isValid === false
+        return this.isValid === false || this.saveBdd === false
       },
     },
   }
