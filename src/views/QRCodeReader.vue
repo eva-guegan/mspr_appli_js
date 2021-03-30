@@ -59,30 +59,52 @@
         // Timeout pour éviter que le traitement se fasse tout de suite
         await this.timeout(2000)
         // Vérification que c'est bien un qrCode de GoStyle
-        // TODO : changer le startWith avec GOStyle
-        this.isValid = content.startsWith('T')
+        this.isValid = content.startsWith('GOSTYLE_')
+
         // enregistrement en bdd via l'api
         if (this.isValid === true) {
-          this.saveBdd = true
-          console.log('enregistrer en bdd')
-          // await this.axios
-          //     .post(this.$root.baseApi + '/user_coupons', {
-          //       "id_user": "1",
-          //       "id_coupon": "1",
-          //       "isused": "0",
-          //     })
-          // TODO : voir quand enregistre deux fois le même code pour le même user
-          // .then(res => {
-          //   this.saveBdd = res.data.bool;
-          //   if (this.saveBdd === false) {
-          //     this.isValid = false
-          //   }
+          console.log('enregistrement en bdd')
+          // récupération de l'id du coupon
+          let split = content.split("_")
+          let idCoupon = split[split.length-1]
+
+          console.log(this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet')
+          console.log(this.$root.baseApi + 'coupons/' + idCoupon)
+
+          // envoi de la requête api
+          // await this.axios.create({
+          //   headers: {
+          //     post: {
+          //       'Content-type': 'text/uri-list'
+          //     }
+          //   },
+          // }).request({
+          //   url: this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet',
+          //   method: "post",
+          //   data : this.$root.baseApi + 'coupons/' + idCoupon
           // })
+
+          let data = this.$root.baseApi + 'coupons/' + idCoupon
+          await this.axios.post(this.$root.baseApi + 'users/' + this.$root.idUser + '/couponSet', data, {
+            headers: {
+              "Content-Type": "text/uri-list",
+              'Access-Control-Allow-Origin': '*',
+              "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+            }
+          }).then(res => {
+            console.log(true)
+            this.saveBdd = true
+          }).catch(err => {
+            console.log(err)
+          })
+
+          // TODO : voir quand enregistre deux fois le même code pour le même user
         }
 
         // Timeout pour que les users est le temps de lire le message
         await this.timeout(3500)
-        //redirection vers la page des coupons de l'user
+        // redirection vers la page des coupons de l'user si tout c'est bien passé
         if (this.isValid === true && this.saveBdd === true) {
           console.log('redirection vers user_coupons')
           this.$router.push('/')

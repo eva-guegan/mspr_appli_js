@@ -3,6 +3,7 @@
     <h3>Liste des promotions en cours</h3>
     <br />
 
+<!--    Quand isFree = 1 afficher-->
 <!--    Génération des cards-->
     <div class="center">
       <div v-for="resultApi in resultsApi" v-if="resultApi.dateexpire >= dateJour"> <!-- && resultApi.champDiff === 0-->

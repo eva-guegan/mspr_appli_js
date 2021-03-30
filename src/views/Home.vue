@@ -1,22 +1,19 @@
 <template>
   <div class="home">
     <h3>Vos coupons</h3>
-<!--    TODO : barre de recherche selon coupon utiliser ou pas avec un component -->
-    <SearchUserCoupon></SearchUserCoupon>
     <br />
 
 <!--    Génération des cards-->
     <div class="center">
       <div v-for="userCoupon in userCoupons">
         <b-card-group deck class="mb-3">
-          <b-card border-variant="dark" header="Titre du coupon" align="center" style="width: 20em">
+          <b-card border-variant="dark" :header="userCoupon.titre" align="center" style="width: 20em">
             <b-card-text>
-              <p v-if="userCoupon.used === false">Vous n'avez pas utiliser votre coupon</p>
-              <p v-else>Vous avez utiliser votre coupon</p>
-
-              La réduction
+              - {{ userCoupon.reduc }}% de réduction !
               <br />
-              La date d'expiration
+              A utiliser avant le : {{ userCoupon.dateexpire }}
+              <!--              Si besoin d'un btn détail -->
+              <!--              <b-button variant="primary"><router-link class="lienBlanc" :to="'user/' + resultApi.idUser">Détail</router-link></b-button><span>azer</span>-->
             </b-card-text>
           </b-card>
         </b-card-group>
@@ -28,13 +25,8 @@
 </template>
 
 <script>
-import SearchUserCoupon from '@/components/SearchUserCoupon.vue'
-
 export default {
   name: 'Home',
-  components: {
-    SearchUserCoupon
-  },
   data() {
     return {
       userCoupons: [],
@@ -47,9 +39,10 @@ export default {
     appelApiUserCoupons() {
       // Récupération des coupons de l'utilisateur connecter
       this.axios
-          .get(this.$root.baseApi + 'users/'+ this.$root.idUser +'/user_couponSet')
+          .get(this.$root.baseApi + 'users/'+ this.$root.idUser +'/couponSet')
           .then(res => {
-            this.userCoupons = res.data._embedded.user_coupons;
+            this.userCoupons = res.data._embedded.coupons;
+            console.log(this.userCoupons)
           })
     }
   },
