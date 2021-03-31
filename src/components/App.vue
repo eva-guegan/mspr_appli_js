@@ -10,7 +10,7 @@
           <b-navbar-nav>
             <b-nav-item><router-link to="/">Accueil</router-link></b-nav-item>
             <b-nav-item><router-link to="/liste_promotions">Promotions</router-link></b-nav-item>
-            <b-nav-item><router-link to="/qrcode_reader">QRCodeReader</router-link></b-nav-item>
+            <b-nav-item><router-link to="/qrcode_reader">Scanner un QRCode</router-link></b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
